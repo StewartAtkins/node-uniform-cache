@@ -85,15 +85,15 @@ function createTests(impl){
 		test.expect(4);
 		var testdata = "hi there";
 		var keyname = "__test__generateddata__"+timestamp;
-		client.fetch(keyname,function(err, data){
+		client.fetch(keyname,function(callback){
+			callback(null, testdata, 0);
+		},function(err, data){
 			test.equal(err, null, "Fetch 1 returned error");
 			test.equal(data, testdata, "Fetch 1 returned incorrect data");
 			client.fetch(keyname, function(err, data){
 				test.equal(err, null, "Fetch 2 returned error");
 				test.equal(data, (impl == "dummy" ? null : testdata), "Fetch 2 returned incorrect data");
 			});
-		},function(callback){
-			callback(null, testdata, 0);
 		});
 		test.done();
 	};
@@ -103,11 +103,11 @@ function createTests(impl){
 		var testdata = "hi there";
 		var keyname = "__test__generateddata2__"+timestamp;
 		var eerr = "Something happened";
-		client.fetch(keyname,function(err, data){
+		client.fetch(keyname,function(callback){
+			callback(eerr,null);
+		},function(err, data){
 			test.equal(err, eerr, "Fetch returned error");
 			test.equal(data, null, "Fetch returned unexpected data");
-		},function(callback){
-			callback(eerr,null);
 		});
 		test.done();
 	};

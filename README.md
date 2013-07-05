@@ -8,7 +8,7 @@ The interface provided is relatively basic to ensure portability between backing
 The available backing stores are:
 * Dummy - no backing store, will return data if used with the read-through mechanism or increment command, but otherwise returns null.
 * Memory - basic in-memory backing store, keeps data in process memory which is not persistent but likely acceptable if a standalone backing store is not available or not desired.
-* Redis - uses a redis server as a backing store
+* Redis - uses a redis server as a backing store (currently incomplete)
 * Memcache - Not yet implemented
 
 ###Why was it created?
@@ -24,14 +24,14 @@ As you probably know JavaScript doesn't support interfaces, but if it did, it'd 
 ```JavaScript
 module.createClient(options) - returns Cache instance, see individual modules for options
 
-Cache.fetch(key, callback, generator = null) - callback(err, data), generator(callback)* (optional)
-Cache.store(key, val, ttl, overwrite = false, callback = null) - overwrite (optional, default: false), callback(err, data) (optional). TTL measured in milliseconds
-Cache.remove(key, callback = null) - callback(err, data) (optional)
-Cache.increment(key, amount = 1, callback = null) - amount (optional, default: 1), callback(err, data) (optional)
+Cache.fetch(key[, generator = null], callback) - callback(err, data), generator(callback)* (optional)
+Cache.store(key, val, ttl[, overwrite = false][, callback = null]) - overwrite (optional, default: false), callback(err, data) (optional). TTL measured in milliseconds
+Cache.remove(key[, callback = null]) - callback(err, data) (optional)
+Cache.increment(key[, amount = 1][, callback = null]) - amount (optional, default: 1), callback(err, data) (optional)
 Cache.close() - disconnects the cache instance from the network (if applicable)
 ```
 
-* The generator is passed a callback which it is expected to use to pass the data back. The data will be stored in the cache then returned to the original caller's callback.
+ * The generator is passed a callback which it is expected to use to pass the data back. The data will be stored in the cache then returned to the original caller's callback.
 The callback has the signature callback(err, data, ttl = 0) where err is passed back to the original caller's callback. Note: data is only returned and stored if no error occurred.
 
 ####Usage example
@@ -45,13 +45,14 @@ var app = require('express')();
 ...
 
 app.get("/",function(request, response){
-	client.fetch("articlelist", function(err, articledata){
-		response.render("template",articledata);
-	},function(callback){
+	client.fetch("articlelist", function(callback){
 		db.query("...",function(rows){
 			//send the result back and store it in the cache for 1 hour
 			callback(null, rows, 60 * 60 * 1000);
 		});
+	},function(err, articledata){
+		//handle the result fetched from the cache
+		response.render("template",articledata);
 	});
 });
 

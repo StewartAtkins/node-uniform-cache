@@ -4,7 +4,11 @@ module.exports = exports = self;
 self.createClient = function(options){
 	var ret = {};
 	
-	ret.fetch = function(key, callback, generator){
+	ret.fetch = function(key, generator, callback){
+		if(!callback){
+			callback = generator;
+			generator = null;
+		}
 		if(generator){
 			generator(function(err, data, ttl){
 				var spec = null;

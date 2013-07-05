@@ -15,7 +15,11 @@ self.createClient = function(options){
 		}
 	};
 	
-	ret.fetch = function(key, callback, generator){
+	ret.fetch = function(key, generator, callback){
+		if(!callback){
+			callback = generator;
+			generator = null;
+		}
 		removeKeyIfExpired(key);
 		
 		if(key in storage){
