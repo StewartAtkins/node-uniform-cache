@@ -35,7 +35,9 @@ self.createClient = function(options){
 					var spec = null;
 					if(!err){
 						spec = data;
-						ret.store(key, data, ttl, true);
+						if(typeof(spec) == "undefined")
+							spec = null;
+						ret.store(key, spec, ttl, true);
 					}
 					callback(err, spec);
 				});
