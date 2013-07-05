@@ -1,0 +1,15 @@
+{
+  "name": "uniform-cache-tests",
+  "version": "0.0.1",
+  "description": "Tests package for uniform-cache implementations",
+  "main": "tests.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Stewart Atkins",
+  "license": "BSD",
+  "devDependencies": {
+    "nodeunit": "~0.8.1"
+  }
+}

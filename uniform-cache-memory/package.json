@@ -1,0 +1,9 @@
+{
+  "name": "uniform-cache-memory",
+  "version": "0.0.1",
+  "description": "In-memory-store based implementation of the uniform-cache interface",
+  "main": "index.js",
+  "repository": "https://github.com/StewartAtkins/node-uniform-cache.git",
+  "author": "Stewart Atkins",
+  "license": "BSD"
+}
