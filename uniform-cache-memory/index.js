@@ -30,7 +30,7 @@ self.createClient = function(options){
 					try {
 						ttl = parseInt(ttl);
 						if(isNaN(ttl))
-							ttl = 0;
+							ttl = -1;
 					}catch(e){}
 					var spec = null;
 					if(!err){
@@ -39,6 +39,7 @@ self.createClient = function(options){
 							spec = null;
 						ret.store(key, spec, ttl, true);
 					}
+					//TODO: should callback wait until store is run, if it runs?
 					callback(err, spec);
 				});
 			}else{
@@ -51,13 +52,16 @@ self.createClient = function(options){
 		removeKeyIfExpired(key);
 		overwrite = !!overwrite;
 		if(!overwrite && key in storage){
+			//should the error be null in this case?
+			callback(null);
 			return;
 		}
-		
-		storage[key] = {
-			"data": val,
-			"expireTime": (ttl ? new Date().getTime() + ttl : 0)
-		};
+		if(ttl >= 0){
+			storage[key] = {
+				"data": val,
+				"expireTime": (ttl ? new Date().getTime() + ttl : 0)
+			};
+		}
 		if(callback)
 			callback(null);
 	};

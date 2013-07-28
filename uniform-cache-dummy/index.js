@@ -15,6 +15,8 @@ self.createClient = function(options){
 				if(!err){
 					spec = data;
 				}
+				if(typeof(spec) == "undefined")
+					spec = null;
 				callback(err, spec);
 			});
 		}else{

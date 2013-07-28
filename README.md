@@ -25,7 +25,7 @@ As you probably know JavaScript doesn't support interfaces, but if it did, it'd 
 module.createClient(options) - returns Cache instance, see individual modules for options
 
 Cache.fetch(key[, generator = null], callback) - callback(err, data), generator(callback)* (optional)
-Cache.store(key, val, ttl[, overwrite = false][, callback = null]) - overwrite (optional, default: false), callback(err, data) (optional). TTL measured in milliseconds
+Cache.store(key, val, ttl[, overwrite = false][, callback = null]) - overwrite (optional, default: false), callback(err, data) (optional). TTL measured in milliseconds, negative value indicates "don't store"
 Cache.remove(key[, callback = null]) - callback(err, data) (optional)
 Cache.increment(key[, amount = 1][, callback = null]) - amount (optional, default: 1), callback(err, data) (optional)
 Cache.close() - disconnects the cache instance from the network (if applicable)
