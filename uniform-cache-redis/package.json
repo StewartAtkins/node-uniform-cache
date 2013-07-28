@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/StewartAtkins/node-uniform-cache.git",
   "author": "Stewart Atkins",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "redis": "~0.8.4"
+  }
 }
