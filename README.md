@@ -8,7 +8,7 @@ The interface provided is relatively basic to ensure portability between backing
 The available backing stores are:
 * Dummy - no backing store, will return data if used with the read-through mechanism or increment command, but otherwise returns null.
 * Memory - basic in-memory backing store, keeps data in process memory which is not persistent but likely acceptable if a standalone backing store is not available or not desired.
-* Redis - uses a redis server as a backing store (currently incomplete)
+* Redis - uses a redis server as a backing store
 * Memcache - Not yet implemented
 
 ###Why was it created?
@@ -39,7 +39,7 @@ Here's a simple example, express is not required, but is used here to demonstrat
 ```JavaScript
 var module = require('../uniform-cache-dummy');
 var options = {...};
-var client = createClient(options);
+var client = module.createClient(options);
 
 var app = require('express')();
 ...

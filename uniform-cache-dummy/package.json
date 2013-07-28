@@ -1,6 +1,6 @@
 {
   "name": "uniform-cache-dummy",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Dummy implentation (no backing store) of the uniform-cache interface",
   "main": "index.js",
   "repository": "https://github.com/StewartAtkins/node-uniform-cache.git",

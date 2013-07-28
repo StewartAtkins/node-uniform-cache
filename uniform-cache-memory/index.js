@@ -33,14 +33,17 @@ self.createClient = function(options){
 							ttl = -1;
 					}catch(e){}
 					var spec = null;
-					if(!err){
+					if(err){
+						callback(err, spec);
+					}else{
 						spec = data;
 						if(typeof(spec) == "undefined")
 							spec = null;
-						ret.store(key, spec, ttl, true);
+						ret.store(key, spec, ttl, true, function(err){
+							callback(err, spec);
+						});
 					}
 					//TODO: should callback wait until store is run, if it runs?
-					callback(err, spec);
 				});
 			}else{
 				callback(null, null);
